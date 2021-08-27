@@ -139,12 +139,23 @@ process refine{
         file(barcode_fasta) from ch_barcodes
     output:
         file("*.flnc.bam") into ch_refined_reads
+        file("*.flnc.report.csv") into ch_refined_flnc_report
         file("*")
     script:
         """
         isoseq3 refine --require-polya $merged_bam $barcode_fasta ${barcode}.flnc.bam
         """
 }
+
+// ch_combined_refined_flnc_report = \
+// ch_refined_flnc_report.flatten().collectFile( name:"combined.flnc.report.csv"
+//     storeDir:"${params.outdir}/isoseq3/refine/",
+//     keepHeader:true
+// )
+ch_refined_flnc_report.collectFile(
+    name:'full.flnc.report.csv', 
+    keepHeader:true, 
+    storeDir:"${params.outdir}/isoseq3/refine/").set{ch_combined_flnc_report}
 
 /*
 Hierarchical clustering of all reads
@@ -197,11 +208,32 @@ process collapse {
         file(aligned_reads) from ch_aligned_reads
     output:
         file("*")
+        file("${params.name}.collapsed.fasta") into ch_collapsed_fasta
 
     script:
         """
         isoseq3 collapse $aligned_reads ${params.name}.collapsed.gff
         """
+}
+
+ch_collapsed_fasta.splitFasta(record: [id: true, seqString: true ])
+
+process collapsed_rename_fasta{
+    publishDir "${params.outdir}/isoseq3/collapse", mode: "copy"
+
+    input:
+        file(fasta) from ch_collapsed_fasta
+    output:
+        file("*")
+    shell:
+    '''
+    while IFS= read -r line
+    do
+    IFS='|' read -r id string <<< "$line"
+    echo  "$id" >> "collapsed.pb_acc_only.fasta"
+
+    done < !{fasta}
+    '''
 }
 
 log.info "====================================="
