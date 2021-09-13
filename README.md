@@ -8,6 +8,7 @@ The IsoSeq pipeline is implemented in the following steps
     * demultiplexing and primer removal 
 2. merge
     * combine ccs reads based on barcode pair
+    * only valid barcodes pairs are merged - all combinations of 3p__5p barcode pairs as defined in barcodes.fasta
 3. refine
     * polyA tail trimming
     * concatemer removal
@@ -48,3 +49,5 @@ The IsoSeq pipeline is implemented in the following steps
     * genome fasta file to use in alignment
 4. --name
     *  name of experiment
+
+![IsoSeq Workflow](https://github.com/sheynkman-lab/IsoSeq-Nextflow/blob/main/media/isoseq-workflow.svg)
