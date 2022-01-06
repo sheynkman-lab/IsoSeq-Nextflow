@@ -8,6 +8,7 @@ The IsoSeq pipeline is implemented in the following steps
     * demultiplexing and primer removal 
 2. merge
     * combine ccs reads based on barcode pair
+    * only valid barcodes pairs are merged - all combinations of 3p__5p barcode pairs as defined in barcodes.fasta
 3. refine
     * polyA tail trimming
     * concatemer removal
@@ -21,13 +22,22 @@ The IsoSeq pipeline is implemented in the following steps
     * collapse reads 
 
 
-## Running the Pipeline
+## Running the Pipeline with Docker
 > nextflow run isoseq3.nf
 --ccs_reads <ccs_reads> 
 --barcodes <barcode> 
 --genome_fasta <genome_fasta> 
 --name example
 
+## Running the Pipeline with Singularity
+> nextflow run isoseq3.nf
+--ccs_reads <ccs_reads> 
+--barcodes <barcode> 
+--genome_fasta <genome_fasta> 
+--name example
+-with-singularity
+-without-docker
+ 
 ## Input
 1. --ccs_reads
     * ccs.bam file or directory containing cc.bam files
@@ -39,3 +49,5 @@ The IsoSeq pipeline is implemented in the following steps
     * genome fasta file to use in alignment
 4. --name
     *  name of experiment
+
+![IsoSeq Workflow](https://github.com/sheynkman-lab/IsoSeq-Nextflow/blob/main/media/isoseq-workflow.svg)
