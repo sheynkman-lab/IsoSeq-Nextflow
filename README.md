@@ -24,23 +24,23 @@ The IsoSeq pipeline is implemented in the following steps
 
 ## Running the Pipeline with Docker
 > nextflow run isoseq3.nf
---ccs_reads <ccs_reads> 
---barcodes <barcode> 
---genome_fasta <genome_fasta> 
+--ccs_reads ccs/read/dir
+--barcodes barcodes.fasta
+--genome_fasta genome.fasta
 --name example
 
 ## Running the Pipeline with Singularity
 > nextflow run isoseq3.nf
---ccs_reads <ccs_reads> 
---barcodes <barcode> 
---genome_fasta <genome_fasta> 
+--ccs_reads ccs/read/dir 
+--barcodes barcode.fasta
+--genome_fasta genome.fasta
 --name example
 -with-singularity
 -without-docker
  
 ## Input
 1. --ccs_reads
-    * ccs.bam file or directory containing cc.bam files
+    * ccs.bam file or directory containing ccs.bam files
 2. --barcodes
     * barcode primers to use when demultiplexing
     * 3' barcodes must end in _3p
