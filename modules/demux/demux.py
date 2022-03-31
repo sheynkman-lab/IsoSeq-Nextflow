@@ -135,7 +135,7 @@ def pivot_reads_by_file(collapsed_reads):
 
 def save(collapsed_reads,demuxed_reads,demuxed_pivot, demuxed_pivot_barcode, demuxed_pivot_file, odir):
     logging.info('Saving files...')
-    collapsed_reads.to_csv(os.path.join(odir, 'collapsed_reads_with_mapping.tsv'), sep='\t')
+    collapsed_reads.to_csv(os.path.join(odir, 'collapsed_reads_with_mapping.tsv'), sep='\t', index=False)
     demuxed_reads.to_csv(os.path.join(odir, 'demuxed_reads_by_barcode_and_file.tsv'), sep='\t')
     demuxed_pivot.to_csv(os.path.join(odir, 'demuxed_pivot_by_barcode_and_file.tsv'), sep='\t')
     demuxed_pivot_barcode.to_csv(os.path.join(odir, 'demuxed_pivot_by_barcode.tsv'), sep='\t')
