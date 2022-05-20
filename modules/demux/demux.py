@@ -133,13 +133,13 @@ def pivot_reads_by_file(collapsed_reads):
     return demuxed_pivot_file
 
 
-def save(collapsed_reads,demuxed_reads,demuxed_pivot, demuxed_pivot_barcode, demuxed_pivot_file, odir):
+def save(collapsed_reads,demuxed_reads,demuxed_pivot, demuxed_pivot_barcode, demuxed_pivot_file, name, odir):
     logging.info('Saving files...')
-    collapsed_reads.to_csv(os.path.join(odir, 'collapsed_reads_with_mapping.tsv'), sep='\t', index=False)
-    demuxed_reads.to_csv(os.path.join(odir, 'demuxed_reads_by_barcode_and_file.tsv'), sep='\t')
-    demuxed_pivot.to_csv(os.path.join(odir, 'demuxed_pivot_by_barcode_and_file.tsv'), sep='\t')
-    demuxed_pivot_barcode.to_csv(os.path.join(odir, 'demuxed_pivot_by_barcode.tsv'), sep='\t')
-    demuxed_pivot_file.to_csv(os.path.join(odir, 'demuxed_pivot_by_file.tsv'), sep='\t')
+    collapsed_reads.to_csv(os.path.join(odir, f'{name}.collapsed_reads_with_mapping.tsv'), sep='\t', index=False)
+    demuxed_reads.to_csv(os.path.join(odir, f'{name}.demuxed_reads_by_barcode_and_file.tsv'), sep='\t', index=False)
+    demuxed_pivot.to_csv(os.path.join(odir, f'{name}.demuxed_pivot_by_barcode_and_file.tsv'), sep='\t')
+    demuxed_pivot_barcode.to_csv(os.path.join(odir, f'{name}.demuxed_pivot_by_barcode.tsv'), sep='\t')
+    demuxed_pivot_file.to_csv(os.path.join(odir, f'{name}.demuxed_pivot_by_file.tsv'), sep='\t')
 
     
 
@@ -169,7 +169,7 @@ def main():
     demuxed_pivot = pivot_demuxed_reads(demuxed_reads)
     demuxed_pivot_barcode = pivot_reads_by_barcode(collapsed_reads)
     demuxed_pivot_file = pivot_reads_by_file(collapsed_reads)
-    save(collapsed_reads, demuxed_reads, demuxed_pivot, demuxed_pivot_barcode, demuxed_pivot_file, output_directory)
+    save(collapsed_reads, demuxed_reads, demuxed_pivot, demuxed_pivot_barcode, demuxed_pivot_file, args.name, output_directory)
 
 
 
